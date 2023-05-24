@@ -7,9 +7,11 @@ const AddProduct = () => {
   const [image, setImage] = useState(null);
 
   const handleCreate = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default form submission behavior
 
+    // Create a new FormData object to store the form data
     const formData = new FormData();
+    // Append form fields to the FormData object
     formData.append("name", name);
     formData.append("description", description);
     formData.append("price", price);
@@ -26,6 +28,7 @@ const AddProduct = () => {
           body: formData,
         }
       );
+      // Send a POST request to the specified URL with the form data
 
       if (res.status === 201) window.alert("Product added successfully.");
       else window.alert("Some error occured, open console for more info.");

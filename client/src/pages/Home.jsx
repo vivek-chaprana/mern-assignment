@@ -5,6 +5,7 @@ import { useSaveCart } from "../hooks/useSaveCart";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  //fucntion to fetch all products form db
   const fetchData = async () => {
     try {
       const { data } = await axios.get(
@@ -16,8 +17,10 @@ const Home = () => {
     }
   };
 
+  // custom hook to save cart data to local storage
   useSaveCart();
 
+  // fetch data to first render only
   useEffect(() => {
     fetchData();
   }, []);

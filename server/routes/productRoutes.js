@@ -1,14 +1,12 @@
 const express = require("express");
 const fs = require("fs");
-const path = require("path");
 const formidable = require("formidable");
-
 const Product = require("../model/productModel");
-
 const slugify = require("slugify");
 
 const router = express.Router();
 
+// Route for creating a new product
 router.post("/create-product", (req, res) => {
   const form = new formidable.IncomingForm();
 
@@ -21,6 +19,7 @@ router.post("/create-product", (req, res) => {
     const { name, description, price } = fields;
     const { image } = files;
 
+    // Check if all required fields are present
     switch (true) {
       case !name:
         return res.status(500).send({ error: "Name is Required" });
@@ -41,6 +40,7 @@ router.post("/create-product", (req, res) => {
     });
 
     if (image) {
+      // Read the image file and set it as the data for the product
       newProduct.image.data = fs.readFileSync(image.filepath);
       newProduct.image.contentType = image.mimetype;
     }
@@ -59,12 +59,13 @@ router.post("/create-product", (req, res) => {
   });
 });
 
+// Route for getting all products
 router.get("/get-products", async (req, res) => {
   try {
     const products = await Product.find({})
-      .select("-image")
+      .select("-image") // Exclude the 'image' field from the response
       // .limit(6)
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 }); // Sort products by creation date in descending order
     res.status(200).send({
       success: true,
       message: "All products fetched successfully.",
@@ -80,6 +81,7 @@ router.get("/get-products", async (req, res) => {
   }
 });
 
+// Route for getting a product's photo
 router.get("/product-photo/:pid", async (req, res) => {
   try {
     const product = await Product.findById(req.params.pid).select("image");

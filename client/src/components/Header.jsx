@@ -13,7 +13,7 @@ const Header = () => {
   const [cart] = useCart();
   const [mobileMenu, setMobileMenu] = useState(false);
 
-  useGetSaveCart();
+  useGetSaveCart(); //Cutsom hook to get saved cart data from local storage
 
   return (
     <header

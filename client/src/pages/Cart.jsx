@@ -4,6 +4,8 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { useSaveCart } from "../hooks/useSaveCart";
 
 const Cart = () => {
+  //Decrese product qty by 1
+
   const handleDecrement = (id) => {
     setCart((cart) => {
       const updatedCart = cart.map((item) => {
@@ -22,8 +24,10 @@ const Cart = () => {
     });
   };
 
+  //Save Cart to Localstorage | CustomHook
   useSaveCart();
 
+  //Increase product qty by 1
   const handleIncrement = (id) => {
     const updatedCart = cart.map((item) => {
       if (item._id === id) {
@@ -42,6 +46,7 @@ const Cart = () => {
 
   const [cart, setCart] = useCart();
 
+  //Discounts on the basisi on quantity
   const discounts = {
     1: { discount: 0 },
     2: { discount: 10 },
@@ -49,6 +54,7 @@ const Cart = () => {
     4: { discount: 30 },
     5: { discount: 40 },
   };
+  // Gives discounted price for a product
   const getDiscountedPrice = (price, qty) => {
     if (qty > 1) {
       const total = price * qty;
@@ -59,6 +65,7 @@ const Cart = () => {
     return price;
   };
 
+  //Gives final total of all products
   const getFinalPrice = () => {
     let finalPrice = 0;
     cart.forEach((item) => {
