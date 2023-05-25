@@ -96,7 +96,13 @@ const Cart = () => {
                     {item.name}
                   </h2>
                   <p className="text-xl">{item.description}</p>
-                  <h3 className="text-2xl text-black font-semibold">
+                  <h3
+                    className={
+                      item.quantity === 1
+                        ? "text-green-500 text-2xl font-semibold"
+                        : "text-black text-2xl font-semibold"
+                    }
+                  >
                     $ {item.price}
                   </h3>
                   {item.quantity > 1 && (
@@ -105,8 +111,13 @@ const Cart = () => {
                       <p className="text-green-500 text-4xl">
                         ${getDiscountedPrice(item.price, item.quantity)}
                       </p>
-                      <p className="line-through">
-                        ${item.price * item.quantity}
+                      <p className="flex items-center">
+                        <p className="line-through mr-3">
+                          ${item.price * item.quantity}
+                        </p>
+                        <p className="text-lg text-green-500">
+                          {discounts[item.quantity].discount} % off
+                        </p>
                       </p>
                     </h3>
                   )}
