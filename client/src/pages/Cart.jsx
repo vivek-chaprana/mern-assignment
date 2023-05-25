@@ -10,12 +10,13 @@ const Cart = () => {
     setCart((cart) => {
       const updatedCart = cart.map((item) => {
         if (item._id === id) {
+          let newAmt;
           if (item.quantity > 1) {
-            let newAmt = item.quantity - 1;
-            return { ...item, quantity: newAmt };
+            newAmt = item.quantity - 1;
           } else {
-            return item;
+            newAmt = item.quantity;
           }
+          return { ...item, quantity: newAmt };
         } else {
           return item;
         }
@@ -78,9 +79,9 @@ const Cart = () => {
     <main className="w-full max-w-[1280px] px-5 md:px-10 mx-auto">
       <h1 className="text-4xl font-bold my-3">Cart</h1>
       <h2 className="text-xl my-3">
-        You have {cart.length} items in you cart.
+        You have {cart?.length} items in you cart.
       </h2>
-      {cart.length > 0 ? (
+      {cart?.length > 0 ? (
         <section>
           {cart.map((item) => {
             return (
@@ -111,14 +112,14 @@ const Cart = () => {
                       <p className="text-green-500 text-4xl">
                         ${getDiscountedPrice(item.price, item.quantity)}
                       </p>
-                      <p className="flex items-center">
+                      <div className="flex items-center">
                         <p className="line-through mr-3">
                           ${item.price * item.quantity}
                         </p>
                         <p className="text-lg text-green-500">
                           {discounts[item.quantity].discount} % off
                         </p>
-                      </p>
+                      </div>
                     </h3>
                   )}
                   <p>
