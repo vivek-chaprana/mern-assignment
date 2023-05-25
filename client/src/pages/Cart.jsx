@@ -7,22 +7,15 @@ const Cart = () => {
   //Decrese product qty by 1
 
   const handleDecrement = (id) => {
-    setCart((cart) => {
-      const updatedCart = cart.map((item) => {
-        if (item._id === id) {
-          let newAmt;
-          if (item.quantity > 1) {
-            newAmt = item.quantity - 1;
-          } else {
-            newAmt = item.quantity;
-          }
-          return { ...item, quantity: newAmt };
-        } else {
-          return item;
+    const updatedCart = cart
+      .map((curElem) => {
+        if (curElem._id === id) {
+          return { ...curElem, quantity: curElem.quantity - 1 };
         }
-      });
-      setCart(updatedCart);
-    });
+        return curElem;
+      })
+      .filter((curElem) => curElem.quantity !== 0);
+    setCart(updatedCart);
   };
 
   //Save Cart to Localstorage | CustomHook
@@ -79,9 +72,9 @@ const Cart = () => {
     <main className="w-full max-w-[1280px] px-5 md:px-10 mx-auto">
       <h1 className="text-4xl font-bold my-3">Cart</h1>
       <h2 className="text-xl my-3">
-        You have {cart?.length} items in you cart.
+        You have {cart.length} items in you cart.
       </h2>
-      {cart?.length > 0 ? (
+      {cart.length > 0 ? (
         <section>
           {cart.map((item) => {
             return (
